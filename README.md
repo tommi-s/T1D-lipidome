@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is the **living database** of **lipidomic aberrations during the pathogenesis of type 1 diabetes** (T1D). The database has been collected from scientific publications that report abnormalities in the lipidome that associate with the onset of T1D. In practice, this means either (1) lipids that are aberrated in blood samples collected from persons, who are later known to have developed T1D, or (2) lipids that are associated with the deterioration of insulin secretion in blood samples collected from persons recently diagnosed with T1D.
+This is the **living database** of **lipidomic aberrations** during the **pathogenesis of type 1 diabetes** (T1D). The database has been collected from scientific publications that report abnormalities related to the onset of T1D. In practice, this means either (1) lipids that are aberrated in blood samples collected from persons, who are later known to have been diagnosed with T1D, or (2) lipids that are associated with the deterioration of insulin secretion in blood samples collected from persons recently diagnosed with T1D.
 
 ## Citation
 
