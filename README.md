@@ -8,7 +8,7 @@ This is the **living database** of **lipidomic aberrations** during the **pathog
 
 This database is described in the following publication. Please cite the publication, if you use the database or related code:
 
-Lipidomic Abnormalities During the Pathogenesis of Type 1 Diabetes: a Quantitative Review. Tommi Suvitaival. Current Diabetes Reports. http://dx.doi.org/10.1007/s11892-020-01326-8
+Lipidomic Abnormalities During the Pathogenesis of Type 1 Diabetes: a Quantitative Review. Tommi Suvitaival. Current Diabetes Reports. 20, 46 (2020). http://dx.doi.org/10.1007/s11892-020-01326-8
 
 ## Database of the Publication
 
