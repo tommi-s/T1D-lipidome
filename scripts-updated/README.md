@@ -2,7 +2,7 @@ T1D Lipidome
 ================
 Tommi Suvitaival, <tommi.raimo.leo.suvitaival@regionh.dk>, Steno
 Diabetes Center Copenhagen
-2020-07-06
+2020-08-17
 
 # Preparations
 
@@ -18,20 +18,6 @@ data.loaded <-
     sep = "\t",
     stringsAsFactors = FALSE
   )
-```
-
-## Load Package
-
-``` r
-if ( grepl( x = getwd(), pattern = "/cu_10102" ) ) { # Set path on Computerome.
-  
-  path.pkg <- "/home/projects/cu_10102/people/tomsuv/code/R/SysMedCode/"
-
-} else { # Set path to department's drive.
-
-  path.pkg <- "P:/SDC/Klinisk Forskning/Lukkede Mapper/SysMedCode/"
-  
-}
 ```
 
 ## Create Additional Columns
@@ -165,18 +151,10 @@ data.plot <- data[ data$"Contrast" == "PT1D/CTR", ]
 
 data.plot <- data.plot[ !is.na( data.plot$"Significance" ), ]
 
-source( paste0( path.pkg, "functions/map_lipid_names/map_lipid_names.R" ) )
-
 names.lipids.unique <- unique( data.plot$"Name" )
 
-names.mapping <- map_lipid_names( x = names.lipids.unique )
-```
+names.mapping <- lipidomeR::map_lipid_names( x = names.lipids.unique )
 
-    ## [1] "map_lipid_names has been created by Tommi Suvitaival"
-    ## [1] "tommi.raimo.leo.suvitaival@regionh.dk"
-    ## [1] "2019-05-06"
-
-``` r
 names.mapping[ which( names.mapping$"Class" == "PC-O/" ), "Class" ] <-
   "PC-O/P"
 ```
@@ -229,16 +207,13 @@ data.summed <-
 ## Heatmap of Consensus Aberration in Progression to T1D
 
 ``` r
-source( paste0( path.pkg, "functions/heatmap_lipidome/heatmap_lipidome.R" ) )
-source( paste0( path.pkg, "functions/heatmap_lipidome_from_limma/heatmap_lipidome_from_limma.R" ) )
-
 tmp <- c( "Name", "Consensus_Effect" )
 
 tmp2 <- colnames( data.summed )[ !( colnames( data.summed ) %in% tmp ) ]
 tmp2 <- c( "Name", tmp2 )
 
 figure <-
-  heatmap_lipidome(
+  lipidomeR::heatmap_lipidome(
     x = data.summed[ , tmp ],
     names.mapping = data.summed[ , tmp2 ],
     class.facet = "wrap",
@@ -440,14 +415,8 @@ data.plot <- data.plot[ !grepl( x = data.plot$"Name", pattern = "Oxidized" ), ]
 
 names.lipids.unique <- unique( data.plot$"Name" )
 
-names.mapping <- map_lipid_names( x = names.lipids.unique )
-```
+names.mapping <- lipidomeR::map_lipid_names( x = names.lipids.unique )
 
-    ## [1] "map_lipid_names has been created by Tommi Suvitaival"
-    ## [1] "tommi.raimo.leo.suvitaival@regionh.dk"
-    ## [1] "2019-05-06"
-
-``` r
 names.mapping[ which( names.mapping$"Class" == "PC-O/" ), "Class" ] <-
   "PC-O/P"
 
@@ -854,28 +823,8 @@ colnames( lipid.classes.table ) <-
   )
 
 # knitr::kable( x = lipid.classes.table )
-knitr::kable( x = tibble::as_tibble( lipid.classes.table ) )
-```
+# knitr::kable( x = tibble::as_tibble( lipid.classes.table ) )
 
-| Class abbreviation | Class name                    | Number of unique species in review | Example species    |
-| :----------------- | :---------------------------- | ---------------------------------: | :----------------- |
-| CE                 | Cholesterol-ester             |                                  8 | CE(18:1)           |
-| Cer                | Ceramide                      |                                  4 | Cer(40:1)          |
-| DG                 | Diacylglycerol                |                                  8 | DG(32:1)           |
-| LPC                | Lyso-phosphatidylcholine      |                                  8 | LPC(18:3)          |
-| LPE                | Lyso-phosphatidylethanolamine |                                  2 | LPE(16:0)          |
-| PC                 | Phosphatidylcholine           |                                 25 | PC(36:4)           |
-| PC-O/P             | Alkyl-acyl PC                 |                                 12 | PC-O/(36:4)        |
-| PE                 | Phosphatidylethanolamine      |                                  3 | PE(38:2)           |
-| PE-O/P             | Alkyl-acyl PE                 |                                  1 | PE-O/P(34:4)       |
-| PI                 | Phosphatidylinositol          |                                  1 | PI(38:4)           |
-| Plasmenyl-PC       | Plasmenyl-PC                  |                                  1 | Plasmenyl-PC(38:5) |
-| plasmenyl-PE       | Plasmenyl-PE                  |                                  3 | plasmenyl-PE(36:6) |
-| PS                 | Phosphatidylserine            |                                  1 | PS(42:8)           |
-| SM                 | Sphingomyelin                 |                                  8 | SM(36:2)           |
-| TG                 | Triacylglycerol               |                                 45 | TG(50:1)           |
-
-``` r
 write.table(
   x = lipid.classes.table,
   file = "results-updated/Lipid_Classes.tsv",
@@ -1406,30 +1355,14 @@ table1.printed[ table1.printed == "NA" ] <- "-"
 # View( table1.printed )
 # knitr::kable( table1.printed )
 # knitr::kable( tibble::as_tibble( table1.printed ) )
-print(
-  x = tibble::as_tibble( table1.printed ),
-  n = Inf
-  # ,
-  # width = Inf
-)
-```
 
-    ## # A tibble: 9 x 9
-    ##   Study Country Age   `Time from diag~ Contrast `Limiting sampl~
-    ##   <chr> <chr>   <chr> <chr>            <chr>    <chr>           
-    ## 1 La T~ "Swede~ Birth ""               PT1D/CTR 75              
-    ## 2 Lami~ "Finla~ 18 m~ ""               PT1D/CTR 25              
-    ## 3 Lami~ "Finla~ Birth ""               PT1D/CTR 30              
-    ## 4 Li (~ ""      Sero~ ""               PT1D/CTR 0               
-    ## 5 Ores~ "Finla~ 0-1 ~ ""               PT1D/CTR 30.5            
-    ## 6 Over~ "Denma~ < 17~ "1 m, 6 m"       Change ~ 123             
-    ## 7 Pflu~ "Germa~ >= 8~ ""               AB+/AB-  17.5            
-    ## 8 Sen ~ "Finla~ 1 y,~ ""               PT1D/CTR 10              
-    ## 9 Sore~ "USA"   10-2~ "Recent-onset"   T1D/CTR  10              
-    ## # ... with 3 more variables: `Source of results` <chr>, `Number of associated
-    ## #   lipids reported` <chr>, `Independence from other studies (%)` <dbl>
+# print(
+#   x = tibble::as_tibble( table1.printed ),
+#   n = Inf
+#   # ,
+#   # width = Inf
+# )
 
-``` r
 write.table(
   x = table1.printed,
   file = "results-updated/Summary-Publications.tsv",
@@ -1572,33 +1505,35 @@ utils::sessionInfo()
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] tidyr_1.0.0         splines_3.6.2       gtools_3.8.1       
-    ##  [4] Formula_1.2-3       assertthat_0.2.1    highr_0.8          
-    ##  [7] BDgraph_2.62        stats4_3.6.2        latticeExtra_0.6-29
-    ## [10] yaml_2.2.0          d3Network_0.5.2.1   pbivnorm_0.6.0     
-    ## [13] pillar_1.4.3        backports_1.1.5     lattice_0.20-38    
-    ## [16] glue_1.3.1          digest_0.6.23       RColorBrewer_1.1-2 
-    ## [19] checkmate_1.9.4     ggm_2.3             colorspace_1.4-1   
-    ## [22] htmltools_0.4.0     Matrix_1.2-18       plyr_1.8.5         
-    ## [25] psych_1.9.12.31     pkgconfig_2.0.3     purrr_0.3.3        
-    ## [28] corpcor_1.6.9       scales_1.1.0        gdata_2.18.0       
-    ## [31] glasso_1.11         whisker_0.4         jpeg_0.1-8.1       
-    ## [34] fdrtool_1.2.15      huge_1.3.4          htmlTable_1.13.3   
-    ## [37] tibble_3.0.1        farver_2.0.3        ggplot2_3.2.1      
-    ## [40] ellipsis_0.3.0      pbapply_1.4-2       nnet_7.3-12        
-    ## [43] lazyeval_0.2.2      cli_2.0.1           mnormt_1.5-5       
-    ## [46] survival_3.1-8      magrittr_1.5        crayon_1.3.4       
-    ## [49] evaluate_0.14       fansi_0.4.1         gplots_3.0.1.2     
-    ## [52] nlme_3.1-142        MASS_7.3-51.4       foreign_0.8-72     
-    ## [55] tools_3.6.2         data.table_1.12.8   lifecycle_0.2.0    
-    ## [58] stringr_1.4.0       munsell_0.5.0       cluster_2.1.0      
-    ## [61] compiler_3.6.2      caTools_1.18.0      rlang_0.4.6        
-    ## [64] grid_3.6.2          rstudioapi_0.10     rjson_0.2.20       
-    ## [67] htmlwidgets_1.5.1   igraph_1.2.4.2      bitops_1.0-6       
-    ## [70] lavaan_0.6-5        base64enc_0.1-3     labeling_0.3       
-    ## [73] rmarkdown_2.1       gtable_0.3.0        abind_1.4-5        
-    ## [76] reshape2_1.4.3      qgraph_1.6.4        R6_2.4.1           
-    ## [79] gridExtra_2.3       knitr_1.27          dplyr_0.8.3        
-    ## [82] utf8_1.1.4          Hmisc_4.3-0         KernSmooth_2.23-16 
-    ## [85] stringi_1.4.4       parallel_3.6.2      Rcpp_1.0.3         
-    ## [88] vctrs_0.2.4         rpart_4.1-15        acepack_1.4.1      
-    ## [91] png_0.1-7           tidyselect_1.0.0    xfun_0.12
+    ##  [4] Formula_1.2-3       assertthat_0.2.1    shadowtext_0.0.7   
+    ##  [7] highr_0.8           BiocManager_1.30.10 BDgraph_2.62       
+    ## [10] stats4_3.6.2        latticeExtra_0.6-29 lipidomeR_0.1.2    
+    ## [13] yaml_2.2.0          d3Network_0.5.2.1   pbivnorm_0.6.0     
+    ## [16] pillar_1.4.3        backports_1.1.5     lattice_0.20-38    
+    ## [19] glue_1.3.1          limma_3.42.0        digest_0.6.23      
+    ## [22] RColorBrewer_1.1-2  checkmate_1.9.4     ggm_2.3            
+    ## [25] colorspace_1.4-1    htmltools_0.4.0     Matrix_1.2-18      
+    ## [28] survey_3.37         plyr_1.8.5          psych_1.9.12.31    
+    ## [31] pkgconfig_2.0.3     purrr_0.3.3         corpcor_1.6.9      
+    ## [34] scales_1.1.0        gdata_2.18.0        whisker_0.4        
+    ## [37] glasso_1.11         jpeg_0.1-8.1        fdrtool_1.2.15     
+    ## [40] huge_1.3.4          htmlTable_1.13.3    tibble_3.0.1       
+    ## [43] farver_2.0.3        ggplot2_3.2.1       ellipsis_0.3.0     
+    ## [46] pbapply_1.4-2       nnet_7.3-12         lazyeval_0.2.2     
+    ## [49] mnormt_1.5-5        survival_3.1-8      magrittr_1.5       
+    ## [52] crayon_1.3.4        evaluate_0.14       gplots_3.0.1.2     
+    ## [55] nlme_3.1-142        MASS_7.3-51.4       foreign_0.8-72     
+    ## [58] tableone_0.10.0     tools_3.6.2         data.table_1.12.8  
+    ## [61] mitools_2.4         lifecycle_0.2.0     stringr_1.4.0      
+    ## [64] munsell_0.5.0       cluster_2.1.0       compiler_3.6.2     
+    ## [67] caTools_1.18.0      rlang_0.4.6         grid_3.6.2         
+    ## [70] rstudioapi_0.10     rjson_0.2.20        htmlwidgets_1.5.1  
+    ## [73] igraph_1.2.4.2      bitops_1.0-6        lavaan_0.6-5       
+    ## [76] base64enc_0.1-3     labeling_0.3        rmarkdown_2.1      
+    ## [79] gtable_0.3.0        abind_1.4-5         DBI_1.1.0          
+    ## [82] reshape2_1.4.3      qgraph_1.6.4        R6_2.4.1           
+    ## [85] gridExtra_2.3       knitr_1.27          dplyr_0.8.3        
+    ## [88] Hmisc_4.3-0         KernSmooth_2.23-16  stringi_1.4.4      
+    ## [91] parallel_3.6.2      Rcpp_1.0.3          vctrs_0.2.4        
+    ## [94] rpart_4.1-15        acepack_1.4.1       png_0.1-7          
+    ## [97] tidyselect_1.0.0    xfun_0.12

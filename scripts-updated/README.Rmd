@@ -32,22 +32,6 @@ data.loaded <-
 
 ```
 
-## Load Package
-
-```{r Load-Package}
-
-if ( grepl( x = getwd(), pattern = "/cu_10102" ) ) { # Set path on Computerome.
-  
-  path.pkg <- "/home/projects/cu_10102/people/tomsuv/code/R/SysMedCode/"
-
-} else { # Set path to department's drive.
-
-  path.pkg <- "P:/SDC/Klinisk Forskning/Lukkede Mapper/SysMedCode/"
-  
-}
-
-```
-
 ## Create Additional Columns
 
 ```{r Format, message = FALSE, warning = FALSE}
@@ -176,11 +160,9 @@ data.plot <- data[ data$"Contrast" == "PT1D/CTR", ]
 
 data.plot <- data.plot[ !is.na( data.plot$"Significance" ), ]
 
-source( paste0( path.pkg, "functions/map_lipid_names/map_lipid_names.R" ) )
-
 names.lipids.unique <- unique( data.plot$"Name" )
 
-names.mapping <- map_lipid_names( x = names.lipids.unique )
+names.mapping <- lipidomeR::map_lipid_names( x = names.lipids.unique )
 
 names.mapping[ which( names.mapping$"Class" == "PC-O/" ), "Class" ] <-
   "PC-O/P"
@@ -240,16 +222,13 @@ data.summed <-
 
 ```{r Consensus-Sign-Heatmap, fig.width = 6, fig.height = 6, dpi = 600, dev = c( "svg" )}
 
-source( paste0( path.pkg, "functions/heatmap_lipidome/heatmap_lipidome.R" ) )
-source( paste0( path.pkg, "functions/heatmap_lipidome_from_limma/heatmap_lipidome_from_limma.R" ) )
-
 tmp <- c( "Name", "Consensus_Effect" )
 
 tmp2 <- colnames( data.summed )[ !( colnames( data.summed ) %in% tmp ) ]
 tmp2 <- c( "Name", tmp2 )
 
 figure <-
-  heatmap_lipidome(
+  lipidomeR::heatmap_lipidome(
     x = data.summed[ , tmp ],
     names.mapping = data.summed[ , tmp2 ],
     class.facet = "wrap",
@@ -341,7 +320,7 @@ data.plot <- data.plot[ !grepl( x = data.plot$"Name", pattern = "Oxidized" ), ]
 
 names.lipids.unique <- unique( data.plot$"Name" )
 
-names.mapping <- map_lipid_names( x = names.lipids.unique )
+names.mapping <- lipidomeR::map_lipid_names( x = names.lipids.unique )
 
 names.mapping[ which( names.mapping$"Class" == "PC-O/" ), "Class" ] <-
   "PC-O/P"
@@ -724,7 +703,7 @@ colnames( lipid.classes.table ) <-
   )
 
 # knitr::kable( x = lipid.classes.table )
-knitr::kable( x = tibble::as_tibble( lipid.classes.table ) )
+# knitr::kable( x = tibble::as_tibble( lipid.classes.table ) )
 
 write.table(
   x = lipid.classes.table,
@@ -1220,12 +1199,13 @@ table1.printed[ table1.printed == "NA" ] <- "-"
 # View( table1.printed )
 # knitr::kable( table1.printed )
 # knitr::kable( tibble::as_tibble( table1.printed ) )
-print(
-  x = tibble::as_tibble( table1.printed ),
-  n = Inf
-  # ,
-  # width = Inf
-)
+
+# print(
+#   x = tibble::as_tibble( table1.printed ),
+#   n = Inf
+#   # ,
+#   # width = Inf
+# )
 
 write.table(
   x = table1.printed,
