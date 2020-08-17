@@ -220,7 +220,7 @@ data.summed <-
 
 ## Heatmap of Consensus Aberration in Progression to T1D
 
-```{r Consensus-Sign-Heatmap, fig.width = 6, fig.height = 6, dpi = 600, dev = c( "svg" )}
+```{r Consensus-Sign-Heatmap, fig.width = 6, fig.height = 6, dpi = 600, dev = c( "svg", "png" )}
 
 tmp <- c( "Name", "Consensus_Effect" )
 
