@@ -1,0 +1,9 @@
+"Study"	"Country"	"Age"	"Time from diagnosis"	"Contrast"	"Limiting sample size (median)"	"Source of results"	"Number of associated lipids reported"	"Independence from other studies (%)"
+"La Torre (2013) Diabetes"	"Sweden"	"Birth"	""	"PT1D/CTR"	"75"	"Table 3"	"6"	62
+"Lamichhane (2018) Scientific Reports"	"Finland"	"18 m, 6 m"	""	"PT1D/CTR"	"25"	"Figure 4a"	"3"	0
+"Lamichhane (2019) Biomolecules"	"Finland"	"Birth"	""	"PT1D/CTR"	"30"	"Figure 1"	"7"	0
+"Oresic (2008) Journal of Experimental Medicine"	"Finland"	"0-1 y, 1-2 y, 2-3 y, 3-4 y, 4-5 y, 6-7 y, 7-8 y, 8-9 y, 9-10 y, Birth"	""	"PT1D/CTR"	"30.5"	"Figure 3a"	"39"	68
+"Overgaard (2018) Metabolomics"	"Denmark"	"< 17 y"	"1 m, 6 m"	"Change in C-peptide"	"123"	"Table 3, Table 4"	"27"	100
+"Pflueger (2011) Diabetes"	"Germany"	">= 8 y, 0-2 y"	""	"AB+/AB-"	"17.5"	"Supplementary Table 3"	"15"	50
+"Sen (2020) Diabetologia"	"Finland"	"1 y, 2 y, 3 y"	""	"PT1D/CTR"	"10"	"Figure 1"	"44"	36
+"Sorensen (2010) Clinical Biochemistry"	"USA"	"10-29 y"	"Recent-onset"	"T1D/CTR"	"10"	"Table 4"	"26"	100
