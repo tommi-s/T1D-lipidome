@@ -29,4 +29,4 @@ The database is also being updated, when new publications appear in the field.
 * The **updated database** can be found at [data-updated/T1D-lipidome-database-updated.tsv](data-updated/T1D-lipidome-database-updated.tsv).
 * The **analysis code** along with *updated* output can be found at the [scripts-updated](scripts-updated) folder.
 
-If you know of a new publication in the field and the publication reports direct lipid-specific associtions to the onset or progression of T1D, you are welcome to inform the author of the database, Tommi Suvitaival, about it. Most easily, this can be done by posting an [https://github.com/tommi-s/T1D-lipidome/issues](issue) to this Github repository or, alternatively, via email.
+If you know of a new publication in the field and the publication reports direct lipid-specific associtions to the onset or progression of T1D, you are welcome to inform the author of the database, Tommi Suvitaival, about it. Most easily, this can be done by posting an [issue](https://github.com/tommi-s/T1D-lipidome/issues) to this Github repository or, alternatively, via email.
