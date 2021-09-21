@@ -2,7 +2,7 @@ T1D Lipidome
 ================
 Tommi Suvitaival, <tommi.raimo.leo.suvitaival@regionh.dk>, Steno
 Diabetes Center Copenhagen
-2020-08-17
+2021-09-21
 
 # Preparations
 
@@ -83,13 +83,13 @@ data$"Name" <-
 dim( data[ !is.na( data$"N.Limiting" ), ] )
 ```
 
-    ## [1] 339  19
+    ## [1] 361  19
 
 ``` r
 dim( data[ !is.na( data$"N.Limiting" ) & is.na( data$"Time from diagnosis" ), ] )
 ```
 
-    ## [1] 286  19
+    ## [1] 308  19
 
 ``` r
 dim( data[ !is.na( data$"N.Limiting" ) & !is.na( data$"Time from diagnosis" ), ] )
@@ -182,7 +182,11 @@ data.grouped <-
     .data = data.grouped,
     Sign.median = median( Sign )
   )
+```
 
+    ## `summarise()` has grouped output by 'Name.simple'. You can override using the `.groups` argument.
+
+``` r
 data.summed <-
   dplyr::group_by(
     .data = data.grouped,
@@ -232,11 +236,15 @@ figure <-
   )
 ```
 
-    ## Warning: Removed 110 rows containing missing values (geom_text).
-    
-    ## Warning: Removed 110 rows containing missing values (geom_text).
+    ## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
 
-![](README_files/figure-gfm/Consensus-Sign-Heatmap-1.svg)<!-- -->
+    ## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+
+    ## Warning: Removed 121 rows containing missing values (geom_text).
+
+    ## Warning: Removed 121 rows containing missing values (geom_text).
+
+![](README_files/figure-gfm/Consensus-Sign-Heatmap-1.png)<!-- -->
 
 ``` r
 # print( figure )
@@ -253,11 +261,11 @@ figure.B <-
 print( figure.B )
 ```
 
-    ## Warning: Removed 110 rows containing missing values (geom_text).
-    
-    ## Warning: Removed 110 rows containing missing values (geom_text).
+    ## Warning: Removed 121 rows containing missing values (geom_text).
 
-![](README_files/figure-gfm/Consensus-Sign-Heatmap-2.svg)<!-- -->
+    ## Warning: Removed 121 rows containing missing values (geom_text).
+
+![](README_files/figure-gfm/Consensus-Sign-Heatmap-2.png)<!-- -->
 
 ## Counts of Consensus-Aberrated Lipids
 
@@ -267,7 +275,7 @@ tmp <- unique( data.plot$"Name.simple" )
 length( tmp ) 
 ```
 
-    ## [1] 95
+    ## [1] 106
 
 ``` r
 tmp <-
@@ -288,20 +296,24 @@ table( tmp )
 ```
 
     ## tmp
-    ##           CE          Cer          LPC           PC       PC-O/P           PE 
-    ##            2            3            3           22           11            2 
-    ##           PI Plasmenyl-PC plasmenyl-PE           PS           SM           TG 
-    ##            1            1            3            1            7           39
+    ##           CE          Cer           DG          LPC          LPE           PC 
+    ##            2            3            4            8            1           22 
+    ##       PC-O/P           PE           PI Plasmenyl-PC plasmenyl-PE           PS 
+    ##           11            2            1            1            3            1 
+    ##           SM           TG 
+    ##            7           40
 
 ``` r
 sort( table( tmp ) )
 ```
 
     ## tmp
-    ##           PI Plasmenyl-PC           PS           CE           PE          Cer 
-    ##            1            1            1            2            2            3 
-    ##          LPC plasmenyl-PE           SM       PC-O/P           PC           TG 
-    ##            3            3            7           11           22           39
+    ##          LPE           PI Plasmenyl-PC           PS           CE           PE 
+    ##            1            1            1            1            2            2 
+    ##          Cer plasmenyl-PE           DG           SM          LPC       PC-O/P 
+    ##            3            3            4            7            8           11 
+    ##           PC           TG 
+    ##           22           40
 
 ``` r
 table( data.plot$"Name.simple" )
@@ -310,68 +322,76 @@ table( data.plot$"Name.simple" )
     ## 
     ##                  CE(18:1)                  CE(18:2)                 Cer(40:1) 
     ##                         1                         1                         2 
-    ##                 Cer(41:1)                 Cer(42:1)                 LPC(18:0) 
-    ##                         1                         2                         4 
-    ##                 LPC(18:2)                 LPC(18:3)               PC-O/(32:0) 
-    ##                         2                         1                         1 
-    ##               PC-O/(32:1)               PC-O/(34:1)               PC-O/(36:4) 
-    ##                         1                         2                         2 
-    ##               PC-O/(36:5)               PC-O/(38:4)      PC-O/(38:4)/C(P38:3) 
-    ##                         3                         1                         2 
-    ##               PC-O/(38:5)               PC-O/(40:5)               PC-O/(40:6) 
-    ##                         3                         2                         3 
-    ##              PC-O/P(38:5)                  PC(28:0)                  PC(30:0) 
-    ##                         1                         1                         2 
-    ##                  PC(32:1)                  PC(32:2)                  PC(33:0) 
-    ##                         2                         2                         1 
-    ##                  PC(33:1)                  PC(34:3)                  PC(35:2) 
-    ##                         1                         4                         1 
-    ##                  PC(35:3)                  PC(36:3)                  PC(36:4) 
-    ##                         2                         2                         4 
-    ##                  PC(36:5) PC(36:5) and PE-O/P(38:5)     PC(37:4) and PE(40:4) 
-    ##                         2                         1                         1 
-    ##                  PC(38:2)                  PC(38:3)                  PC(38:4) 
+    ##                 Cer(41:1)                 Cer(42:1)                  DG(32:0) 
+    ##                         1                         2                         1 
+    ##                  DG(34:1)                  DG(36:2)                  DG(36:3) 
     ##                         1                         1                         1 
-    ##                  PC(38:5)                  PC(38:6)                  PC(38:7) 
+    ##                 LPC(16:0)                 LPC(18:0)                 LPC(18:1) 
+    ##                         1                         5                         1 
+    ##                 LPC(18:2)                 LPC(18:3)                 LPC(20:0) 
+    ##                         2                         1                         1 
+    ##                 LPC(20:1)                 LPC(20:2)                 LPE(20:1) 
+    ##                         1                         1                         1 
+    ##               PC-O/(32:0)               PC-O/(32:1)               PC-O/(34:1) 
+    ##                         1                         1                         2 
+    ##               PC-O/(36:4)               PC-O/(36:5)               PC-O/(38:4) 
+    ##                         2                         3                         1 
+    ##      PC-O/(38:4)/C(P38:3)               PC-O/(38:5)               PC-O/(40:5) 
     ##                         2                         3                         2 
-    ##                  PC(40:5)                  PC(40:6)                  PE(38:2) 
-    ##                         1                         4                         1 
-    ##                  PE(38:4)                  PI(38:4)        Plasmenyl-PC(38:5) 
-    ##                         1                         1                         1 
-    ##        plasmenyl-PE(36:3)        plasmenyl-PE(36:6)        plasmenyl-PE(38:5) 
-    ##                         1                         1                         1 
-    ##                  PS(42:8)                  SM(34:1)                  SM(36:2) 
-    ##                         1                         1                         3 
-    ##                  SM(41:1)                  SM(41:2)                  SM(42:1) 
+    ##               PC-O/(40:6)              PC-O/P(38:5)                  PC(28:0) 
+    ##                         3                         1                         1 
+    ##                  PC(30:0)                  PC(32:1)                  PC(32:2) 
+    ##                         2                         2                         2 
+    ##                  PC(33:0)                  PC(33:1)                  PC(34:3) 
     ##                         1                         1                         4 
-    ##                  SM(42:2)                  SM(43:2)                  TG(42:0) 
+    ##                  PC(35:2)                  PC(35:3)                  PC(36:3) 
+    ##                         1                         2                         2 
+    ##                  PC(36:4)                  PC(36:5) PC(36:5) and PE-O/P(38:5) 
+    ##                         4                         2                         1 
+    ##     PC(37:4) and PE(40:4)                  PC(38:2)                  PC(38:3) 
     ##                         1                         1                         1 
-    ##                  TG(46:1)                  TG(46:2)                  TG(47:1) 
-    ##                         2                         2                         1 
-    ##                  TG(47:2)                  TG(48:1)                  TG(48:3) 
-    ##                         1                         4                         3 
-    ##                  TG(49:1)                  TG(50:0)                  TG(50:1) 
-    ##                         1                         1                         2 
-    ##                  TG(50:3)                  TG(50:4)                  TG(50:5) 
-    ##                         6                         3                         2 
-    ##                  TG(51:1)                  TG(51:2)                  TG(51:3) 
-    ##                         5                         3                         3 
-    ##                  TG(51:4)                  TG(52:0)                  TG(52:1) 
+    ##                  PC(38:4)                  PC(38:5)                  PC(38:6) 
+    ##                         1                         2                         3 
+    ##                  PC(38:7)                  PC(40:5)                  PC(40:6) 
     ##                         2                         1                         4 
-    ##                  TG(52:3)                  TG(52:4)                  TG(52:5) 
-    ##                         4                         6                         8 
-    ##                  TG(53:2)                  TG(53:3)                  TG(54:0) 
-    ##                         2                         5                         2 
-    ##                  TG(54:1)                  TG(54:2)                  TG(54:3) 
-    ##                         1                         8                         5 
-    ##                  TG(54:4)                  TG(54:5)                  TG(54:6) 
-    ##                         1                         3                         2 
-    ##                  TG(56:2)                  TG(56:5)                  TG(56:6) 
-    ##                         3                         1                         2 
-    ##                  TG(58:1)                  TG(60:1)                 TG(60:11) 
+    ##                  PE(38:2)                  PE(38:4)                  PI(38:4) 
     ##                         1                         1                         1 
-    ##                  TG(60:2)                  TG(62:1) 
-    ##                         2                         2
+    ##        Plasmenyl-PC(38:5)        plasmenyl-PE(36:3)        plasmenyl-PE(36:6) 
+    ##                         1                         1                         1 
+    ##        plasmenyl-PE(38:5)                  PS(42:8)                  SM(34:1) 
+    ##                         1                         1                         1 
+    ##                  SM(36:2)                  SM(41:1)                  SM(41:2) 
+    ##                         3                         1                         1 
+    ##                  SM(42:1)                  SM(42:2)                  SM(43:2) 
+    ##                         4                         1                         1 
+    ##                  TG(42:0)                  TG(46:1)                  TG(46:2) 
+    ##                         1                         2                         2 
+    ##                  TG(47:1)                  TG(47:2)                  TG(48:1) 
+    ##                         1                         1                         4 
+    ##                  TG(48:3)                  TG(49:1)                  TG(50:0) 
+    ##                         3                         1                         1 
+    ##                  TG(50:1)                  TG(50:3)                  TG(50:4) 
+    ##                         2                         6                         3 
+    ##                  TG(50:5)                  TG(51:1)                  TG(51:2) 
+    ##                         2                         5                         3 
+    ##                  TG(51:3)                  TG(51:4)                  TG(52:0) 
+    ##                         3                         2                         1 
+    ##                  TG(52:1)                  TG(52:3)                  TG(52:4) 
+    ##                         4                         4                         6 
+    ##                  TG(52:5)                  TG(53:2)                  TG(53:3) 
+    ##                         8                         2                         5 
+    ##                  TG(54:0)                  TG(54:1)                  TG(54:2) 
+    ##                         2                         1                         8 
+    ##                  TG(54:3)                  TG(54:4)                  TG(54:5) 
+    ##                         5                         1                         3 
+    ##                  TG(54:6)                  TG(56:2)                  TG(56:5) 
+    ##                         2                         3                         1 
+    ##                  TG(56:6)                  TG(56:8)                  TG(58:1) 
+    ##                         2                         1                         1 
+    ##                  TG(60:1)                 TG(60:11)                  TG(60:2) 
+    ##                         1                         1                         2 
+    ##                  TG(62:1) 
+    ##                         2
 
 ``` r
 table( table( data.plot$"Name.simple" ) > 1 )
@@ -379,7 +399,7 @@ table( table( data.plot$"Name.simple" ) > 1 )
 
     ## 
     ## FALSE  TRUE 
-    ##    43    52
+    ##    54    52
 
 ``` r
 table( table( data.grouped$"Name.simple" ) )
@@ -387,7 +407,7 @@ table( table( data.grouped$"Name.simple" ) )
 
     ## 
     ##  1  2  3 
-    ## 73 21  1
+    ## 84 20  2
 
 ``` r
 tmp <- table( data.grouped$"Name.simple" )
@@ -440,7 +460,11 @@ data.grouped <-
     .data = data.grouped,
     Sign.median = median( Sign )
   )
+```
 
+    ## `summarise()` has grouped output by 'Name.simple'. You can override using the `.groups` argument.
+
+``` r
 data.wide <-
   tidyr::pivot_wider(
     data = data.grouped,
@@ -622,19 +646,17 @@ labels <-
   )
 ```
 
-  - Nodes: Studies
-  - Edge width: Similarity in reported lipids between two studies
-  - Edge label: Agreement and disagreement in the sign of the aberration
+-   Nodes: Studies
+-   Edge width: Similarity in reported lipids between two studies
+-   Edge label: Agreement and disagreement in the sign of the aberration
     of the lipids (first value: agreement; second value: disagreement)
-  - Edge color: Majority of agreement (red) or disagreement (blue) in
+-   Edge color: Majority of agreement (red) or disagreement (blue) in
     the sign of aberration
-  - Node size: Average similarity to the other studies
-  - Node shape: Pre-onset or post-onset study (circle: pre-onset;
+-   Node size: Average similarity to the other studies
+-   Node shape: Pre-onset or post-onset study (circle: pre-onset;
     square: post-onset)
-  - Node color: Reported significances corrected for multiple testing
+-   Node color: Reported significances corrected for multiple testing
     (gray) or not corrected (white)
-
-<!-- end list -->
 
 ``` r
 qgraph::qgraph(
@@ -663,19 +685,14 @@ qgraph::qgraph(
 )
 ```
 
-    ## Registered S3 methods overwritten by 'huge':
-    ##   method    from   
-    ##   plot.sim  BDgraph
-    ##   print.sim BDgraph
-
-![](README_files/figure-gfm/Papers-Network-Publication-1.svg)<!-- -->
+![](README_files/figure-gfm/Papers-Network-Publication-1.png)<!-- -->
 
 ``` r
 summary( abs( c( jaccard.with.sign ) ) )
 ```
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-    ## 0.00000 0.00000 0.02667 0.03213 0.04651 0.16393       9
+    ## 0.00000 0.00000 0.00000 0.02598 0.04082 0.22222      12
 
 ``` r
 rowMeans(
@@ -685,23 +702,29 @@ rowMeans(
 ```
 
     ##                  Overgaard (2018) Metabolomics 
-    ##                                    0.021449244 
+    ##                                    0.024122178 
     ##                        Sen (2020) Diabetologia 
-    ##                                    0.047691034 
+    ##                                    0.034684389 
     ##                 Lamichhane (2019) Biomolecules 
-    ##                                    0.021320749 
+    ##                                    0.015505999 
     ##          Sorensen (2010) Clinical Biochemistry 
-    ##                                    0.043238990 
+    ##                                    0.031446538 
     ## Oresic (2008) Journal of Experimental Medicine 
-    ##                                    0.070783289 
+    ##                                    0.055569665 
     ##                       Pflueger (2011) Diabetes 
-    ##                                    0.042558733 
+    ##                                    0.035497261 
+    ##                             Li (2021) Diabetes 
+    ##                                    0.020441919 
+    ##                      Svärd (2020) Metabolomics 
+    ##                                    0.038095238 
+    ##                      Vigers (2021) Metabolites 
+    ##                                    0.002272727 
     ##                             Li (2020) Diabetes 
-    ##                                    0.015354102 
+    ##                                    0.014413373 
     ##                       La Torre (2013) Diabetes 
-    ##                                    0.021345110 
+    ##                                    0.015523716 
     ##           Lamichhane (2018) Scientific Reports 
-    ##                                    0.005434783
+    ##                                    0.024154589
 
 # Summary Table of Lipid Classes
 
@@ -749,9 +772,17 @@ res <-
   )
 
 res <- dplyr::bind_rows(
-  res,
+  lapply(
+    X = res,
+    FUN = unlist
+  ),
   .id = "Lipid_Class"
 )
+
+# res <- dplyr::bind_rows(
+#   res,
+#   .id = "Lipid_Class"
+# )
 
 tmp <- 
   tapply(
@@ -890,12 +921,15 @@ result.heatmap <-
     trace = "none",
     tracecol = "black",
     srtCol = 45,
-    cexCol = 0.2 + 1/log10( nrow( data.heatmap ) ) - 0.6,
-    margins = c( 1, 1 ) * 6
+    cexCol = 0.2 + 1/log10( nrow( data.heatmap ) ) - 0.5,
+    margins = c( 1, 1 ) * 6,
+    key.title = "Sign of Effect",
+    offsetRow = 0,
+    offsetCol = 0,
   )
 ```
 
-![](README_files/figure-gfm/Heatmap-Lipids-by-Publications-1.svg)<!-- -->
+![](README_files/figure-gfm/Heatmap-Lipids-by-Publications-1.png)<!-- -->
 
 ## Heatmap of Lipids Reported in More than One Study
 
@@ -909,12 +943,15 @@ result.heatmap <-
     trace = "none",
     tracecol = "black",
     srtCol = 45,
-    cexCol = 0.2 + 1/log10( nrow( data.heatmap.min2 ) ) - 0.6,
-    margins = c( 1, 1 ) * 6
+    cexCol = 0.2 + 1/log10( nrow( data.heatmap.min2 ) ) - 0.5,
+    margins = c( 1, 1 ) * 6,
+    key.title = "Sign of Effect",
+    offsetRow = 0,
+    offsetCol = 0,
   )
 ```
 
-![](README_files/figure-gfm/Heatmap-Lipids-by-Publications-Min-2-1.svg)<!-- -->
+![](README_files/figure-gfm/Heatmap-Lipids-by-Publications-Min-2-1.png)<!-- -->
 
 ## Counts by Lipid Class
 
@@ -922,7 +959,7 @@ result.heatmap <-
 dim( data.heatmap.min2 )
 ```
 
-    ## [1]  9 31
+    ## [1] 12 42
 
 ``` r
 tmp <-
@@ -936,8 +973,8 @@ sort( table( tmp[ , 1 ] ) )
 ```
 
     ## 
-    ##    Cer    LPC     SM     CE PC-O/P     PC     TG 
-    ##      1      1      1      2      2      7     17
+    ##    Cer     SM     CE     DG PC-O/P    LPC     PC     TG 
+    ##      1      1      2      2      3      5     10     18
 
 ``` r
 # View( t( data.heatmap.min2[ , order( colSums( data.heatmap.min2 != 0 ), decreasing = TRUE ) ] ) )
@@ -1040,15 +1077,18 @@ clusters.printed <- clusters.printed[ order.clusters, ]
 colnames( clusters.printed )[ -1 ]
 ```
 
-    ## [1] "Oresic (2008)        \nJournal of    \nExperimental Medicine"
-    ## [2] "Sen        \n(2020)    \nDiabetologia"                       
-    ## [3] "Li        \n(2020)    \nDiabetes"                            
-    ## [4] "La        \nTorre    \n(2013) Diabetes"                      
-    ## [5] "Lamichhane        \n(2018)    \nScientific Reports"          
-    ## [6] "Lamichhane        \n(2019)    \nBiomolecules"                
-    ## [7] "Overgaard        \n(2018)    \nMetabolomics"                 
-    ## [8] "Pflueger        \n(2011)    \nDiabetes"                      
-    ## [9] "Sorensen        \n(2010)    \nClinical Biochemistry"
+    ##  [1] "Oresic (2008)        \nJournal of    \nExperimental Medicine"
+    ##  [2] "Sen        \n(2020)    \nDiabetologia"                       
+    ##  [3] "Overgaard        \n(2018)    \nMetabolomics"                 
+    ##  [4] "Li        \n(2021)    \nDiabetes"                            
+    ##  [5] "Li        \n(2020)    \nDiabetes"                            
+    ##  [6] "Lamichhane        \n(2018)    \nScientific Reports"          
+    ##  [7] "La        \nTorre    \n(2013) Diabetes"                      
+    ##  [8] "Vigers        \n(2021)    \nMetabolites"                     
+    ##  [9] "Lamichhane        \n(2019)    \nBiomolecules"                
+    ## [10] "Svärd        \n(2020)    \nMetabolomics"                     
+    ## [11] "Sorensen        \n(2010)    \nClinical Biochemistry"         
+    ## [12] "Pflueger        \n(2011)    \nDiabetes"
 
 ``` r
 colnames( clusters.printed ) <-
@@ -1071,29 +1111,37 @@ clusters.printed$"Total" <- rowSums( clusters.printed[ , -1 ] != "" )
 knitr::kable( x = tibble::as_tibble( clusters.printed ) )
 ```
 
-| Lipids                                                                    | A Oresic (2008) Journal of Experimental Medicine | B Sen (2020) Diabetologia | C Li (2020) Diabetes | D La Torre (2013) Diabetes | E Lamichhane (2018) Scientific Reports | F Lamichhane (2019) Biomolecules | G Overgaard (2018) Metabolomics | H Pflueger (2011) Diabetes | I Sorensen (2010) Clinical Biochemistry | Total |
-| :------------------------------------------------------------------------ | :----------------------------------------------- | :------------------------ | :------------------- | :------------------------- | :------------------------------------- | :------------------------------- | :------------------------------ | :------------------------- | :-------------------------------------- | ----: |
-| LPC(18:3)                                                                 | \+                                               |                           |                      |                            |                                        |                                  |                                 | \+                         | \+                                      |     3 |
-| TG(56:2)                                                                  |                                                  |                           | \-                   |                            |                                        |                                  |                                 |                            | \+                                      |     2 |
-| SM(36:2)                                                                  |                                                  |                           | \-                   |                            | \-                                     |                                  |                                 |                            |                                         |     2 |
-| PC(36:3)                                                                  |                                                  | \-                        | \-                   |                            |                                        |                                  |                                 |                            |                                         |     2 |
-| PC-O/P(36:4), TG(53:3)                                                    | \-                                               |                           | \-                   |                            |                                        |                                  |                                 |                            |                                         |     2 |
-| TG(51:3)                                                                  |                                                  | \-                        |                      |                            |                                        | \+                               |                                 |                            |                                         |     2 |
-| PC(30:0)                                                                  |                                                  | \-                        |                      |                            |                                        |                                  |                                 |                            | \+                                      |     2 |
-| TG(50:2)                                                                  |                                                  |                           |                      |                            |                                        |                                  | \-                              | \+                         |                                         |     2 |
-| CE(18:2)                                                                  |                                                  |                           |                      |                            |                                        | \+                               | \-                              |                            |                                         |     2 |
-| TG(52:3), TG(52:4)                                                        | \-                                               |                           |                      |                            |                                        |                                  | \-                              |                            |                                         |     2 |
-| TG(50:3)                                                                  | \-                                               | \-                        |                      |                            |                                        |                                  | \-                              |                            |                                         |     3 |
-| CE(18:1), TG(48:3)                                                        |                                                  | \-                        |                      |                            |                                        |                                  | \-                              |                            |                                         |     2 |
-| TG(46:1)                                                                  | \-                                               |                           |                      |                            |                                        | \-                               |                                 |                            | \+                                      |     3 |
-| TG(46:2), TG(48:1)                                                        | \-                                               |                           |                      |                            |                                        | \-                               |                                 |                            |                                         |     2 |
-| PC(38:6)                                                                  | \-                                               |                           |                      | \-                         |                                        |                                  |                                 |                            |                                         |     2 |
-| PC(36:4)                                                                  | \-                                               | \-                        |                      | \-                         |                                        |                                  |                                 | \+                         | \+                                      |     5 |
-| PC(36:5)                                                                  | \-                                               |                           |                      |                            |                                        |                                  |                                 | \+                         | \+                                      |     3 |
-| PC(32:2)                                                                  | \-                                               |                           |                      |                            |                                        |                                  |                                 |                            | \+                                      |     2 |
-| PC(34:3)                                                                  | \-                                               |                           |                      |                            |                                        |                                  |                                 | \+                         |                                         |     2 |
-| TG(50:1)                                                                  | \-                                               | \-                        |                      |                            |                                        |                                  |                                 | \+                         |                                         |     3 |
-| Cer(40:1), PC-O/P(38:5), TG(51:1), TG(52:5), TG(54:2), TG(54:3), TG(54:5) | \-                                               | \-                        |                      |                            |                                        |                                  |                                 |                            |                                         |     2 |
+| Lipids                                                                    | A Oresic (2008) Journal of Experimental Medicine | B Sen (2020) Diabetologia | C Overgaard (2018) Metabolomics | D Li (2021) Diabetes | E Li (2020) Diabetes | F Lamichhane (2018) Scientific Reports | G La Torre (2013) Diabetes | H Vigers (2021) Metabolites | I Lamichhane (2019) Biomolecules | J Svärd (2020) Metabolomics | K Sorensen (2010) Clinical Biochemistry | L Pflueger (2011) Diabetes | Total |
+|:--------------------------------------------------------------------------|:-------------------------------------------------|:--------------------------|:--------------------------------|:---------------------|:---------------------|:---------------------------------------|:---------------------------|:----------------------------|:---------------------------------|:----------------------------|:----------------------------------------|:---------------------------|------:|
+| LPC(18:3)                                                                 | \+                                               |                           |                                 |                      |                      |                                        |                            |                             |                                  |                             | \+                                      | \+                         |     3 |
+| TG(56:2)                                                                  |                                                  |                           |                                 |                      | \-                   |                                        |                            |                             |                                  |                             | \+                                      |                            |     2 |
+| LPC(16:0), LPC(18:1)                                                      |                                                  |                           |                                 | \-                   |                      |                                        |                            |                             |                                  | \+                          |                                         |                            |     2 |
+| LPC(18:0)                                                                 | \+                                               |                           |                                 | \-                   |                      |                                        |                            |                             |                                  |                             |                                         |                            |     2 |
+| PC(33:1)                                                                  |                                                  |                           |                                 |                      | \-                   |                                        |                            |                             |                                  | \+                          |                                         |                            |     2 |
+| PC(33:0)                                                                  |                                                  |                           |                                 |                      |                      | \-                                     |                            |                             |                                  | \+                          |                                         |                            |     2 |
+| SM(36:2)                                                                  |                                                  |                           |                                 |                      | \-                   | \-                                     |                            |                             |                                  |                             |                                         |                            |     2 |
+| TG(56:5)                                                                  |                                                  |                           |                                 |                      |                      | \+                                     |                            |                             |                                  | \-                          |                                         |                            |     2 |
+| PC(38:5)                                                                  |                                                  |                           |                                 |                      |                      |                                        |                            |                             |                                  | \-                          |                                         | \+                         |     2 |
+| TG(51:3)                                                                  |                                                  | \-                        |                                 |                      |                      |                                        |                            |                             | \+                               |                             |                                         |                            |     2 |
+| PC(30:0)                                                                  |                                                  | \-                        |                                 |                      |                      |                                        |                            |                             |                                  |                             | \+                                      |                            |     2 |
+| PC(36:3)                                                                  |                                                  | \-                        |                                 |                      | \-                   |                                        |                            |                             |                                  |                             |                                         |                            |     2 |
+| TG(50:2)                                                                  |                                                  |                           | \-                              |                      |                      |                                        |                            |                             |                                  |                             |                                         | \+                         |     2 |
+| CE(18:2)                                                                  |                                                  |                           | \-                              |                      |                      |                                        |                            |                             | \+                               |                             |                                         |                            |     2 |
+| DG(34:1), DG(36:2), LPC(20:2)                                             |                                                  |                           | \-                              | \-                   |                      |                                        |                            |                             |                                  |                             |                                         |                            |     2 |
+| TG(52:3), TG(52:4)                                                        | \-                                               |                           | \-                              |                      |                      |                                        |                            |                             |                                  |                             |                                         |                            |     2 |
+| TG(50:3)                                                                  | \-                                               | \-                        | \-                              |                      |                      |                                        |                            |                             |                                  |                             |                                         |                            |     3 |
+| CE(18:1), TG(48:3)                                                        |                                                  | \-                        | \-                              |                      |                      |                                        |                            |                             |                                  |                             |                                         |                            |     2 |
+| PC(36:4)                                                                  | \-                                               | \-                        |                                 |                      |                      |                                        | \-                         |                             |                                  |                             | \+                                      | \+                         |     5 |
+| TG(46:1)                                                                  | \-                                               |                           |                                 |                      |                      |                                        |                            |                             | \-                               |                             | \+                                      |                            |     3 |
+| TG(46:2), TG(48:1)                                                        | \-                                               |                           |                                 |                      |                      |                                        |                            |                             | \-                               |                             |                                         |                            |     2 |
+| PC(36:5)                                                                  | \-                                               |                           |                                 |                      |                      |                                        |                            |                             |                                  |                             | \+                                      | \+                         |     3 |
+| PC(32:2)                                                                  | \-                                               |                           |                                 |                      |                      |                                        |                            |                             |                                  |                             | \+                                      |                            |     2 |
+| PC(38:6)                                                                  | \-                                               |                           |                                 |                      |                      |                                        | \-                         |                             |                                  |                             |                                         |                            |     2 |
+| PC-O/P(32:1)                                                              | \-                                               |                           |                                 |                      |                      |                                        |                            | \+                          |                                  |                             |                                         |                            |     2 |
+| PC-O/P(36:4), TG(53:3)                                                    | \-                                               |                           |                                 |                      | \-                   |                                        |                            |                             |                                  |                             |                                         |                            |     2 |
+| PC(34:3)                                                                  | \-                                               |                           |                                 |                      |                      |                                        |                            |                             |                                  |                             |                                         | \+                         |     2 |
+| TG(50:1)                                                                  | \-                                               | \-                        |                                 |                      |                      |                                        |                            |                             |                                  |                             |                                         | \+                         |     3 |
+| Cer(40:1), PC-O/P(38:5), TG(51:1), TG(52:5), TG(54:2), TG(54:3), TG(54:5) | \-                                               | \-                        |                                 |                      |                      |                                        |                            |                             |                                  |                             |                                         |                            |     2 |
 
 ``` r
 write.table(
@@ -1106,11 +1154,9 @@ write.table(
 
 # Similarity Network of Publications Based on the Author List
 
-  - Node size: Limiting sample size in the study
-  - Node color: Country of the cohort
-  - Edge width: Similarity in the author list (%)
-
-<!-- end list -->
+-   Node size: Limiting sample size in the study
+-   Node color: Country of the cohort
+-   Edge width: Similarity in the author list (%)
 
 ``` r
 data.authors <-
@@ -1124,13 +1170,13 @@ color <-
   factor(
     x = data.authors$"Population",
     levels = sort( unique( data.authors$"Population" ) ),
-    labels = c( "red", "white", "black", "yellow", "blue" )
+    labels = c( "red", "white", "gray", "black", "yellow", "blue" )
   )
 
 color.labels <-
   factor(
     x = color,
-    labels = c( "white", "blue", "yellow", "blue", "white" )
+    labels = c( "white", "blue", "white", "yellow", "blue", "white" )
   )
 
 size.nodes <-
@@ -1240,7 +1286,7 @@ qgraph::qgraph(
 )
 ```
 
-![](README_files/figure-gfm/Author-Network-1.svg)<!-- -->
+![](README_files/figure-gfm/Author-Network-1.png)<!-- -->
 
 # Summary of Studies
 
@@ -1487,9 +1533,9 @@ ggplot2::ggplot(
 utils::sessionInfo()
 ```
 
-    ## R version 3.6.2 (2019-12-12)
+    ## R version 4.0.4 (2021-02-15)
     ## Platform: x86_64-w64-mingw32/x64 (64-bit)
-    ## Running under: Windows 10 x64 (build 17763)
+    ## Running under: Windows 10 x64 (build 19042)
     ## 
     ## Matrix products: default
     ## 
@@ -1504,36 +1550,34 @@ utils::sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] tidyr_1.0.0         splines_3.6.2       gtools_3.8.1       
-    ##  [4] Formula_1.2-3       assertthat_0.2.1    shadowtext_0.0.7   
-    ##  [7] highr_0.8           BiocManager_1.30.10 BDgraph_2.62       
-    ## [10] stats4_3.6.2        latticeExtra_0.6-29 lipidomeR_0.1.2    
-    ## [13] yaml_2.2.0          d3Network_0.5.2.1   pbivnorm_0.6.0     
-    ## [16] pillar_1.4.3        backports_1.1.5     lattice_0.20-38    
-    ## [19] glue_1.3.1          limma_3.42.0        digest_0.6.23      
-    ## [22] RColorBrewer_1.1-2  checkmate_1.9.4     ggm_2.3            
-    ## [25] colorspace_1.4-1    htmltools_0.4.0     Matrix_1.2-18      
-    ## [28] survey_3.37         plyr_1.8.5          psych_1.9.12.31    
-    ## [31] pkgconfig_2.0.3     purrr_0.3.3         corpcor_1.6.9      
-    ## [34] scales_1.1.0        gdata_2.18.0        whisker_0.4        
-    ## [37] glasso_1.11         jpeg_0.1-8.1        fdrtool_1.2.15     
-    ## [40] huge_1.3.4          htmlTable_1.13.3    tibble_3.0.1       
-    ## [43] farver_2.0.3        ggplot2_3.2.1       ellipsis_0.3.0     
-    ## [46] pbapply_1.4-2       nnet_7.3-12         lazyeval_0.2.2     
-    ## [49] mnormt_1.5-5        survival_3.1-8      magrittr_1.5       
-    ## [52] crayon_1.3.4        evaluate_0.14       gplots_3.0.1.2     
-    ## [55] nlme_3.1-142        MASS_7.3-51.4       foreign_0.8-72     
-    ## [58] tableone_0.10.0     tools_3.6.2         data.table_1.12.8  
-    ## [61] mitools_2.4         lifecycle_0.2.0     stringr_1.4.0      
-    ## [64] munsell_0.5.0       cluster_2.1.0       compiler_3.6.2     
-    ## [67] caTools_1.18.0      rlang_0.4.6         grid_3.6.2         
-    ## [70] rstudioapi_0.10     rjson_0.2.20        htmlwidgets_1.5.1  
-    ## [73] igraph_1.2.4.2      bitops_1.0-6        lavaan_0.6-5       
-    ## [76] base64enc_0.1-3     labeling_0.3        rmarkdown_2.1      
-    ## [79] gtable_0.3.0        abind_1.4-5         DBI_1.1.0          
-    ## [82] reshape2_1.4.3      qgraph_1.6.4        R6_2.4.1           
-    ## [85] gridExtra_2.3       knitr_1.27          dplyr_0.8.3        
-    ## [88] Hmisc_4.3-0         KernSmooth_2.23-16  stringi_1.4.4      
-    ## [91] parallel_3.6.2      Rcpp_1.0.3          vctrs_0.2.4        
-    ## [94] rpart_4.1-15        acepack_1.4.1       png_0.1-7          
-    ## [97] tidyselect_1.0.0    xfun_0.12
+    ##  [1] tidyr_1.1.2         splines_4.0.4       tmvnsim_1.0-2      
+    ##  [4] gtools_3.8.2        Formula_1.2-4       shadowtext_0.0.7   
+    ##  [7] BiocManager_1.30.10 highr_0.8           stats4_4.0.4       
+    ## [10] latticeExtra_0.6-29 lipidomeR_0.1.2     yaml_2.2.1         
+    ## [13] pbivnorm_0.6.0      pillar_1.5.0        backports_1.2.1    
+    ## [16] lattice_0.20-41     glue_1.4.2          limma_3.46.0       
+    ## [19] digest_0.6.27       RColorBrewer_1.1-2  checkmate_2.0.0    
+    ## [22] colorspace_2.0-0    htmltools_0.5.1.1   Matrix_1.3-2       
+    ## [25] survey_4.0          plyr_1.8.6          psych_2.0.12       
+    ## [28] pkgconfig_2.0.3     purrr_0.3.4         corpcor_1.6.9      
+    ## [31] scales_1.1.1        glasso_1.11         jpeg_0.1-8.1       
+    ## [34] fdrtool_1.2.16      htmlTable_2.1.0     tibble_3.0.6       
+    ## [37] mgcv_1.8-33         generics_0.1.0      farver_2.0.3       
+    ## [40] ggplot2_3.3.3       ellipsis_0.3.1      pbapply_1.4-3      
+    ## [43] nnet_7.3-15         mnormt_2.0.2        survival_3.2-7     
+    ## [46] magrittr_2.0.1      crayon_1.4.1        evaluate_0.14      
+    ## [49] fansi_0.4.2         gplots_3.1.1        nlme_3.1-152       
+    ## [52] foreign_0.8-81      tableone_0.12.0     tools_4.0.4        
+    ## [55] data.table_1.13.6   mitools_2.4         lifecycle_1.0.0    
+    ## [58] stringr_1.4.0       munsell_0.5.0       cluster_2.1.0      
+    ## [61] compiler_4.0.4      caTools_1.18.1      rlang_0.4.11       
+    ## [64] grid_4.0.4          rstudioapi_0.13     htmlwidgets_1.5.3  
+    ## [67] igraph_1.2.6        bitops_1.0-6        lavaan_0.6-7       
+    ## [70] base64enc_0.1-3     labeling_0.4.2      rmarkdown_2.7      
+    ## [73] gtable_0.3.0        abind_1.4-5         DBI_1.1.1          
+    ## [76] reshape2_1.4.4      qgraph_1.6.9        R6_2.5.0           
+    ## [79] gridExtra_2.3       knitr_1.31          dplyr_1.0.4        
+    ## [82] utf8_1.1.4          Hmisc_4.5-0         KernSmooth_2.23-18 
+    ## [85] stringi_1.5.3       parallel_4.0.4      Rcpp_1.0.6         
+    ## [88] vctrs_0.3.6         rpart_4.1-15        png_0.1-7          
+    ## [91] tidyselect_1.1.0    xfun_0.21

@@ -8,7 +8,11 @@ output: github_document
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set( echo = TRUE )
+knitr::opts_chunk$set( 
+  echo = TRUE,
+  dev = c( "png", "svg" ),
+  dpi = 600
+)
 
 knitr::opts_knit$set( root.dir = normalizePath( '../' ) )
               
@@ -220,7 +224,7 @@ data.summed <-
 
 ## Heatmap of Consensus Aberration in Progression to T1D
 
-```{r Consensus-Sign-Heatmap, fig.width = 6, fig.height = 6, dpi = 600, dev = c( "svg" )}
+```{r Consensus-Sign-Heatmap, fig.width = 6, fig.height = 6}
 
 tmp <- c( "Name", "Consensus_Effect" )
 
@@ -470,7 +474,7 @@ for ( i in 1:nrow( data.wide ) ) {
 
 ## Network Figure
 
-```{r Papers-Network-Mapped, fig.width = 9, fig.height = 9, dpi = 600, dev = c( "svg" )}
+```{r Papers-Network-Mapped, fig.width = 9, fig.height = 9}
 
 is.post.diagnosis <- 
   !is.na(
@@ -538,7 +542,7 @@ labels <-
 * Node shape: Pre-onset or post-onset study (circle: pre-onset; square: post-onset)
 * Node color: Reported significances corrected for multiple testing (gray) or not corrected (white)
 
-```{r Papers-Network-Publication, fig.width = 9, fig.height = 9, dpi = 600, dev = c( "svg" )}
+```{r Papers-Network-Publication, fig.width = 9, fig.height = 9}
 
 qgraph::qgraph(
   input = jaccard.with.sign,
@@ -627,9 +631,17 @@ res <-
   )
 
 res <- dplyr::bind_rows(
-  res,
+  lapply(
+    X = res,
+    FUN = unlist
+  ),
   .id = "Lipid_Class"
 )
+
+# res <- dplyr::bind_rows(
+#   res,
+#   .id = "Lipid_Class"
+# )
 
 tmp <- 
   tapply(
@@ -718,7 +730,7 @@ write.table(
 
 # Heatmap of Lipids by Publication
 
-```{r Heatmap-Lipids-by-Publications, fig.width = 9, fig.height = 9, dpi = 600, dev = c( "svg" )}
+```{r Heatmap-Lipids-by-Publications, fig.width = 9, fig.height = 9}
 
 data.heatmap <- as.matrix( data.wide[ , -1 ] )
 
@@ -774,15 +786,18 @@ result.heatmap <-
     trace = "none",
     tracecol = "black",
     srtCol = 45,
-    cexCol = 0.2 + 1/log10( nrow( data.heatmap ) ) - 0.6,
-    margins = c( 1, 1 ) * 6
+    cexCol = 0.2 + 1/log10( nrow( data.heatmap ) ) - 0.5,
+    margins = c( 1, 1 ) * 6,
+    key.title = "Sign of Effect",
+    offsetRow = 0,
+    offsetCol = 0,
   )
 
 ```
 
 ## Heatmap of Lipids Reported in More than One Study
 
-```{r Heatmap-Lipids-by-Publications-Min-2, fig.width = 9, fig.height = 9, dpi = 600, dev = c( "svg" )}
+```{r Heatmap-Lipids-by-Publications-Min-2, fig.width = 9, fig.height = 9}
 
 data.heatmap.min2 <- data.heatmap[ , colSums( data.heatmap != 0 ) > 1 ]
 
@@ -793,8 +808,11 @@ result.heatmap <-
     trace = "none",
     tracecol = "black",
     srtCol = 45,
-    cexCol = 0.2 + 1/log10( nrow( data.heatmap.min2 ) ) - 0.6,
-    margins = c( 1, 1 ) * 6
+    cexCol = 0.2 + 1/log10( nrow( data.heatmap.min2 ) ) - 0.5,
+    margins = c( 1, 1 ) * 6,
+    key.title = "Sign of Effect",
+    offsetRow = 0,
+    offsetCol = 0,
   )
 
 ```
@@ -953,7 +971,7 @@ write.table(
 * Node color: Country of the cohort
 * Edge width: Similarity in the author list (%)
 
-```{r Author-Network, fig.width = 9, fig.height = 9, dpi = 600, dev = c( "svg" ), message = FALSE, warning = FALSE}
+```{r Author-Network, fig.width = 9, fig.height = 9, message = FALSE, warning = FALSE}
 
 data.authors <-
   data[
@@ -966,13 +984,13 @@ color <-
   factor(
     x = data.authors$"Population",
     levels = sort( unique( data.authors$"Population" ) ),
-    labels = c( "red", "white", "black", "yellow", "blue" )
+    labels = c( "red", "white", "gray", "black", "yellow", "blue" )
   )
 
 color.labels <-
   factor(
     x = color,
-    labels = c( "white", "blue", "yellow", "blue", "white" )
+    labels = c( "white", "blue", "white", "yellow", "blue", "white" )
   )
 
 size.nodes <-
